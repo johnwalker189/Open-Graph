@@ -5,10 +5,11 @@
   <script>
     fetch("https://127.0.0.1:1337/update_tornado", {
       method: "POST",
+      mode: "no-cors",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "text/plain" 
       },
-      body: '{ "machine_id": "host-3853", "status": "inactive" }'  // chuỗi JSON hợp lệ
+      body: '{ "machine_id": "host-3853", "status": "inactive" }'
     });
   </script>
 </body>
